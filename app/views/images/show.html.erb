@@ -1,7 +1,3 @@
-<% provide :context_navbar do
-  render "navbar"
-end %>
-
 <%
   @title = :image_show_title.t(name: @image.unique_format_name)
 
@@ -24,17 +20,17 @@ end %>
   if eol_url = @image.eol_url
     tabs << link_to("EOL", eol_url)
   end
-  if check_permission(@image)
-    tabs += [
-      link_with_query(:edit_object.t(type: :image),
-                      action: :edit,
-                      id: @image.id),
-      link_with_query(:destroy_object.t(type: :image),
-                      { action: :destroy,
-                        id: @image.id },
-                      data: { confirm: :are_you_sure.l })
-    ]
-  end
+  # if check_permission(@image)
+  #   tabs += [
+  #     link_with_query(:edit_object.t(type: :image),
+  #                     action: :edit,
+  #                     id: @image.id),
+  #     link_with_query(:destroy_object.t(type: :image),
+  #                     { action: :destroy,
+  #                       id: @image.id },
+  #                     data: { confirm: :are_you_sure.l })
+  #   ]
+  # end
   if @image.user.email_general_commercial
     tabs << link_with_query(:image_show_inquiry.t,
                             controller: :email,
@@ -45,6 +41,22 @@ end %>
     pager_for: @image,
     right: draw_tab_set(tabs)
   }
+
+  @navbar = {} # reset
+  @navbar[:title] = { title: :IMAGES.t, url: images_path }
+  @navbar[:search] = 1
+  if check_permission(@image)
+    @navbar[:links] = [
+      { title: :EDIT.t, url: edit_observation_path(@observation.id),
+        icon: "fa-edit" }
+      { title: :destroy_object.t(type: :image), method: :delete,
+               url: image_path(id: @image.id), icon: "fa-trash-alt",
+               confirm: :are_you_sure.l }
+    ]
+  end
+  @navbar[:dropdowns] = [
+   { title: "Actions", links: tabs }
+  ]
 %>
 
 <div class="row">

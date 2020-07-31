@@ -1,22 +1,15 @@
 <%
-  name_link = { controller: :observations,
-                action: :observations_of_name }
+  # TODO: Render name link in navbar, too
+  name_link = { observations_observations_of_name_path }
 
   if @show_user
     @title = :checklist_for_user_title.t(user: @show_user.legal_name)
     tabs = [
-      link_to(:show_object.t(type: :profile),
-              controller: :users,
-              action: :show,
-              id: @show_user.id),
+      link_to(:show_object.t(type: :profile), users_path(id: @show_user.id)),
       link_to(:show_objects.t(type: :observation),
-              controller: :observations,
-              action: :observations_by_user,
-              id: @show_user.id),
+              observations_observations_by_user_path(id: @show_user.id)),
       link_to(:show_user_email_to.t(name: @show_user.legal_name),
-              controller: :email,
-              action: :ask_user_question,
-              id: @show_user.id)
+              email_ask_user_question_path(id: @show_user.id))
     ]
     # @tabsets = { right: draw_tab_set(tabs) }
     name_link[:user_id] = @show_user.id
@@ -24,13 +17,8 @@
   elsif @project
     @title = :checklist_for_project_title.t(project: @project.title)
     tabs = [
-      link_to(:show_object.t(type: :project),
-              controller: :projects,
-              action: :show,
-              id: @project.id),
-      link_to(:list_objects.t(type: :project),
-              controller: :projects,
-              action: :index)
+      link_to(:show_object.t(type: :project), project_path(id: @project.id),
+      link_to(:list_objects.t(type: :project), projects_path)
     ]
     # @tabsets = { right: draw_tab_set(tabs) }
     name_link[:project_id] = @project.id
@@ -39,16 +27,12 @@
     @title = :checklist_for_species_list_title.t(list: @species_list.title)
     tabs = [
       link_to(:show_object.t(type: :project),
-              controller: :species_lists,
-              action: :show,
-              id: @species_list.id)
+              species_list_path(id: @species_list.id))
     ]
     if check_permission(@species_list)
       tabs += [
         link_to(:edit_object.t(type: :species_list),
-                controller: :species_lists,
-                action: :edit,
-                id: @species_list.id)
+                edit_species_list_path(id: @species_list.id))
       ]
     end
     # @tabsets = { right: draw_tab_set(tabs) }
@@ -57,19 +41,17 @@
   else
     @title = :checklist_for_site_title.t
     tabs = [
-      link_to(:app_contributors.t,
-              controller: :users,
-              action: :users_by_contribution),
-      link_to(:app_site_stats.t,
-              controller: :info,
-              action: :show_site_stats)
+      link_to(:app_contributors.t, users_users_by_contribution_path),
+      link_to(:app_site_stats.t,info_show_site_stats_path)
     ]
     # @tabsets = { right: draw_tab_set(tabs) }
-    @navbar[:title] = { title: :USERS.t, url: users_path }
-    @navbar[:dropdowns] = [
-      { title: "Actions", links: tabs }
-    ]
   end
+
+  @navbar[:title] = { title: :USERS.t, url: users_path }
+  # TODO: Render navbar links, not a dropdown.
+  @navbar[:dropdowns] = [
+    { title: "Actions", links: tabs }
+  ]
 %>
 
 <center>

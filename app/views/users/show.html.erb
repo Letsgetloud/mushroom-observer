@@ -51,8 +51,7 @@
     tabs += [
       link_to(:change_user_bonuses.t,
               users_change_user_bonuses_path(id: @show_user.id)),
-      link_to(:DESTROY.t,
-              account_path(id: @show_user.id, method: "DELETE"),
+      link_to(:DESTROY.t, account_path(id: @show_user.id), method: :delete,
               data: { confirm: :are_you_sure.l })
     ]
   end

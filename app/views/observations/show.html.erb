@@ -19,9 +19,11 @@
     { title: :EDIT.t, url: edit_observation_path(@observation.id),
       icon: "fa-edit" }
   ]
-  @navbar[:links] << { title: :destroy_observation.t, method: :delete,
-                       url: observation_path, icon: "fa-trash-alt",
-                       confirm: :are_you_sure.l } if in_admin_mode?
+  if in_admin_mode?
+    @navbar[:links] << { title: :destroy_observation.t, method: :delete,
+                         url: observation_path(@observation.id),
+                         icon: "fa-trash-alt", confirm: :are_you_sure.l }
+  end
 %>
 
 <div class="row navbar h-auto p-0 mt-3">
