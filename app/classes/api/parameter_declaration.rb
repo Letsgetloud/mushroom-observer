@@ -38,7 +38,7 @@ class API
       end
       return "" if hash.empty?
 
-      " (" + hash.map { |key, val| show_arg(key, val) }.join(", ") + ")"
+      " ( #{hash.map { |key, val| show_arg(key, val) }.join(', ')})"
     end
 
     def show_arg(key, val)
