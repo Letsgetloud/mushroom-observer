@@ -53,7 +53,7 @@ class API
 
     def validate_create_params!(params)
       @title = params[:title].to_s
-      @title2 = @title + ".admin"
+      @title2 = "#{@title}.admin"
       raise(MissingParameter.new(:title)) if @title.blank?
       raise(ProjectTaken.new(@title))     if Project.find_by_title(@title)
       raise(UserGroupTaken.new(@title))   if UserGroup.find_by_name(@title)
