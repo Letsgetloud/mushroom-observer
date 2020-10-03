@@ -15,7 +15,7 @@ class Geocoder < BlankSlate
   attr_reader :valid
 
   GMAPS_CONFIG_FILE = "config/gmaps_api_key.yml"
-  GMAPS_API_KEYS = YAML.load_file("#{::Rails.root.to_s}/#{GMAPS_CONFIG_FILE}")
+  GMAPS_API_KEYS = YAML.load_file("#{::Rails.root}/#{GMAPS_CONFIG_FILE}")
 
   def initialize(place_name)
     @place_name = place_name
