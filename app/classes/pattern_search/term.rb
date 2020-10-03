@@ -29,8 +29,8 @@ module PatternSearch
 
     def quote(val)
       if /['" \\]/.match?(val.to_s)
-        '"' + val.to_s.gsub(/(['"\\])/) { |v| '\\' + v } + '"'
-      else
+        %Q("#{val.to_s.gsub(/(['"\\])/) { |v| '\\' + v }}")
+     else
         val.to_s
       end
     end
