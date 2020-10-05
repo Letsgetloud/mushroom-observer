@@ -410,7 +410,7 @@ class AccountController < ApplicationController
       # Check if we need to upload an image.
       upload = params["user"]["upload_image"]
       if upload.present?
-        date = Date.parse(params["date"]["copyright_year"].to_s + "0101")
+        date = "#{Date.parse(params["date"]["copyright_year"]}0101"
         license = License.safe_find(params["upload"]["license_id"])
         holder = params["copyright_holder"]
         image = Image.new(
