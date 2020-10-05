@@ -339,7 +339,7 @@ class SiteData
     count  = "*"
     table  = FIELD_TABLES[field] || field.to_s
     tables = "#{table} t"
-    conditions = "t.user_id " + (user_id ? "= #{user_id}" : "> 0")
+    conditions = "t.user_id #{user_id ? "= #{user_id}" : "> 0"}"
 
     # Exception for species list entries.
     if field == :species_list_entries
