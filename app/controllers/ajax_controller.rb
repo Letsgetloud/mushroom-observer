@@ -47,7 +47,7 @@ class AjaxController < ApplicationController
     prepare_parameters
     yield
   rescue StandardError => e
-    msg = e.to_s + "\n"
+    msg = "#{e}\n"
     msg += backtrace(e) unless Rails.env.production?
     render(plain: msg, status: :internal_server_error)
   end
@@ -63,7 +63,7 @@ class AjaxController < ApplicationController
     exception.backtrace.each do |line|
       break if /action_controller.*perform_action/.match?(line)
 
-      result += line + "\n"
+      result += "#{line}\n"
     end
     result
   end
